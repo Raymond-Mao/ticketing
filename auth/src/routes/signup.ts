@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import { User } from "../models/user";
-import { RequestValidationError } from "../errors";
+import { BadRequestError, RequestValidationError } from "../errors";
 const router = express.Router();
 router.post(
   "/api/users/signup",
@@ -20,7 +20,7 @@ router.post(
     const { email, password } = req.body;
     const isUserExist = await User.findOne({ email });
     if (isUserExist) {
-      return res.send({});
+      throw new BadRequestError("User existed");
     }
     const user = User.build({ email, password });
     await user.save();
