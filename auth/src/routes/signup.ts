@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import { RequestValidationError, DatabaseConnectionError } from "../errors";
+import { User } from "../models/user";
+import { RequestValidationError } from "../errors";
 const router = express.Router();
 router.post(
   "/api/users/signup",
@@ -11,14 +12,19 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must valid"),
   ],
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw new RequestValidationError(errors.array());
     }
-    console.log("creating user");
-    throw new DatabaseConnectionError();
-    res.send({});
+    const { email, password } = req.body;
+    const isUserExist = await User.findOne({ email });
+    if (isUserExist) {
+      return res.send({});
+    }
+    const user = User.build({ email, password });
+    await user.save();
+    res.status(201).send(user);
   }
 );
 export { router as signupRouter };
