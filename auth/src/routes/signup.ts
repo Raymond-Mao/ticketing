@@ -2,7 +2,8 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user";
-import { BadRequestError, RequestValidationError } from "../errors";
+import { BadRequestError } from "../errors";
+import { validateRequest } from "../middlewares/validate-request";
 const router = express.Router();
 router.post(
   "/api/users/signup",
@@ -13,11 +14,8 @@ router.post(
       .isLength({ min: 4, max: 20 })
       .withMessage("Password must valid"),
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw new RequestValidationError(errors.array());
-    }
     const { email, password } = req.body;
     const isUserExist = await User.findOne({ email });
     if (isUserExist) {
