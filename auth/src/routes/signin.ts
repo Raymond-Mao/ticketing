@@ -3,8 +3,7 @@ import { body } from "express-validator";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user";
 import { Password } from "../services/password";
-import { validateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors";
+import { validateRequest, BadRequestError } from "@arale-auth/common";
 const router = express.Router();
 router.post(
   "/api/users/signin",
