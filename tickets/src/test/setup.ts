@@ -34,6 +34,6 @@ global.signin = () => {
   const session = { jwt: token };
   const sessionJSON = JSON.stringify(session);
   const base64 = Buffer.from(sessionJSON).toString("base64");
-  const result = [`express:sess=${base64}`];
+  const result = [`session=${base64}`];
   return result;
 };
