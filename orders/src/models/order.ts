@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { OrderStatus } from "@arale-auth/common";
 interface OrderAttrs {
   userId: string;
   status: string;
