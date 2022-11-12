@@ -45,7 +45,7 @@ router.post(
       ticket,
     });
     await order.save();
-
+    // @ts-ignore
     new OrderCreatedPublisher(natsWrapper.client).publish({
       id: order.id,
       status: order.status,
