@@ -23,7 +23,7 @@
     "ts-jest": "^29.0.3"
   },
   "dependencies": {
-    "@arale-auth/common": "^0.0.12",
+    "@arale-auth/common": "^0.0.13",
     "@types/bull": "^3.12.2",
     "bull": "^3.13.0",
     "node-nats-streaming": "^0.2.6",
