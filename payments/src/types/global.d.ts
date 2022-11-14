@@ -1,3 +1,3 @@
 declare module globalThis {
-  var signin: () => string[];
+  var signin: (id?: string) => string[];
 }
